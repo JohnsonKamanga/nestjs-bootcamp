@@ -2,27 +2,41 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProductsService {
+  private products = [
+    { id: 1, name: 'Laptop', price: 999.99 },
+    { id: 2, name: 'Phone', price: 699.99 },
+  ];
 
-    private products = [
-        {
-            id: 1,
-            name: 'Product 1',
-            description: 'Description of Product 1',
-            price: 10.99,
-        },
-        {
-            id: 2,
-            name: 'Product 2',
-            description: 'Description of Product 2',
-            price: 19.99,
-        },
-    ];
+  findAll() {
+    return this.products;
+  }
 
-    findAll() {
-        return this.products;
+  findOne(id: number) {
+    const product = this.products.find(p => p.id == id);
+    console.log("Product found:", product, " with id ", id);
+    return product;
+  }
+
+  create(product: any) {
+    const newProduct = { id: Date.now(), ...product };
+    this.products.push(newProduct);
+    return newProduct;
+  }
+
+  update(id: number, product: any) {
+    const index = this.products.findIndex(p => p.id === id);
+    if (index >= 0) {
+      this.products[index] = { ...this.products[index], ...product };
+      return this.products[index];
     }
+    return null;
+  }
 
-    findOne(id: number) {
-        return this.products.find(product => product.id === id);
+  remove(id: number) {
+    const index = this.products.findIndex(p => p.id === id);
+    if (index >= 0) {
+      return this.products.splice(index, 1)[0];
     }
+    return null;
+  }
 }
