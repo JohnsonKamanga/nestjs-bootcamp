@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { CreateProductDto } from './dtos/create-product.dto';
 
 
 @Controller('products')
@@ -20,8 +21,8 @@ export class ProductsController {
 
 
   @Post()
-  create(@Body() body: any) {
-    return this.productsService.create(body);
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productsService.create(createProductDto);
   }
 
 
@@ -34,5 +35,10 @@ export class ProductsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
+  }
+
+  @Post('filter')
+  filter(@Body() body: {is_member: 0 | 1, year_of_study: number}[]) {
+    return this.productsService.filter(body);
   }
 }
