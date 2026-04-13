@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { Product } from './products/entities/product.entity';
 import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
+import { User } from './users/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
@@ -20,13 +21,13 @@ import { JwtModule } from '@nestjs/jwt';
       username: 'postgres',
       password: 'johnson',
       database: 'online_database',
-      entities: [Product, Order, OrderItem],
+      entities: [Product, Order, OrderItem, User],
       synchronize: true, // Don't use in production!
     }),
     ProductsModule,
     OrdersModule,
     UsersModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
